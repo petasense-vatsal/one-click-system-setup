@@ -1,0 +1,75 @@
+{
+  "position": "top",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": ["cpu", "memory", "custom/slack", "custom/bluetooth", "network", "pulseaudio", "pulseaudio#microphone", "battery", "clock"],
+  "clock": {
+    "format": "<span foreground='#f5c2e7'></span>{:%H:%M}",
+    "tooltip-format": "<big>{:%Y %B %d (%A)}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "<span size='13000' foreground='#a6e3a1'>{icon}</span>",
+    "format-warning": "<span size='13000' foreground='#B1E3AD'>{icon}</span>",
+    "format-critical": "<span size='13000' foreground='#E38C8F'>{icon}</span>",
+    "format-charging": "<span size='13000' foreground='#B1E3AD'></span>",
+    "format-plugged": "<span size='13000' foreground='#B1E3AD'></span>",
+    "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon}</span> {time}",
+    "format-full": "<span size='13000' foreground='#B1E3AD'></span>",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip-format": "{capacity}%, {time}",
+    "tooltip-format-plugged": "{capacity}%"
+  },
+  "network": {
+    "format-wifi": "<span size='10500' foreground='#f5e0dc'></span>",
+    "format-ethernet": "<span size='10500' foreground='#f5e0dc'>󰤭</span>",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "<span size='10500' foreground='#888888'></span>",
+    "tooltip-format-wifi": "{essid}, Signal Strenght: {signalStrength}%",
+    "tooltip-format-disconnected": "Network disconnected",
+    "on-click": "kitty -e nmtui"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "",
+    "format-icons": {
+        "default": ["", "", " "]
+    },
+    "on-click": "pavucontrol",
+    "tooltip-format": "{volume}%"
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "<span font=\"FontAwesome\"></span>",
+    "format-source-muted": "<span font=\"FontAwesome\"></span>",
+    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+    "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +1%",
+    "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -1%",
+    "tooltip-format": "{source_volume}%"
+  },
+  "custom/bluetooth": {
+    "exec": "~/.config/waybar/scripts/bluetooth.sh",
+    "interval": 10,
+    "return-type": "json",
+    "format": "{}",
+    "on-click": "kitty -e bluetuith"
+  },
+  "custom/slack": {
+    "exec": "~/.config/waybar/scripts/slack-notify.sh",
+    "interval": 10,
+    "format": "{}",
+    "return-type": "json", 
+    "on-click": "hyprctl dispatch togglespecialworkspace magic"
+  },
+  "cpu": {
+    "format": " {}%",  // Font Awesome CPU icon (or Material Design Icons)
+    "tooltip": true
+  },
+  "memory": {
+    "format": " {}%",  // RAM icon
+    "tooltip": true
+  }
+}

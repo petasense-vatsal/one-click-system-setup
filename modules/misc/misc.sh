@@ -17,6 +17,9 @@ fi
 if [[ -d "$REPO_ROOT/dotfiles/backgrounds" ]]; then
     link_dotfile "$REPO_ROOT/dotfiles/backgrounds" "$HOME/.config/backgrounds"
 fi
+if [[ -d "$REPO_ROOT/dotfiles/waybar" ]]; then
+    link_dotfile "$REPO_ROOT/dotfiles/waybar" "$HOME/.config/waybar"
+fi
 
 # Create .local/bin directory for user scripts
 ensure_dir "$HOME/.local/bin"
