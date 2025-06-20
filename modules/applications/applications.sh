@@ -341,6 +341,39 @@ EOF
     fi
 }
 
+# Function to install essential CLI tools (for desktop entries mode)
+install_essential_cli_tools() {
+    log "Installing essential CLI tools..."
+    
+    # Essential CLI tools that are normally installed by system modules
+    local essential_tools=("bat" "eza" "fd" "ripgrep" "fzf" "zoxide" "starship")
+    local failed_installs=()
+    
+    for tool in "${essential_tools[@]}"; do
+        if ! command -v "$tool" >/dev/null 2>&1; then
+            log "Installing $tool..."
+            if install_package "$tool" "$tool"; then
+                info "✓ Installed $tool"
+            else
+                failed_installs+=("$tool")
+                warn "✗ Failed to install $tool"
+            fi
+        else
+            info "✓ $tool already installed"
+        fi
+    done
+    
+    if [[ ${#failed_installs[@]} -gt 0 ]]; then
+        warn "Some CLI tools failed to install: ${failed_installs[*]}"
+        echo -e "\n${YELLOW}You can manually install them later:${NC}"
+        if command -v pacman >/dev/null 2>&1; then
+            echo -e "  ${CYAN}sudo pacman -S ${failed_installs[*]}${NC}"
+        elif command -v apt >/dev/null 2>&1; then
+            echo -e "  ${CYAN}sudo apt install ${failed_installs[*]}${NC}"
+        fi
+    fi
+}
+
 # Main function
 main() {
     log "Starting application installation..."
@@ -357,7 +390,7 @@ main() {
         # Ask user for setup mode preference
         echo -e "\n${CYAN}Setup Mode Selection:${NC}"
         echo "  1) Full installation - Install packages and create desktop entries"
-        echo "  2) Desktop entries only - Create desktop entries without installing packages"
+        echo "  2) Desktop entries mode - Install essential CLI tools and create desktop entries"
         echo
         while true; do
             read -p "Choose setup mode [1/2]: " mode_choice
@@ -369,7 +402,7 @@ main() {
                     ;;
                 2)
                     setup_mode="new_user"
-                    log "Selected desktop entries only mode"
+                    log "Selected desktop entries mode"
                     break
                     ;;
                 *)
@@ -418,10 +451,16 @@ main() {
         log "Creating desktop entries..."
         create_desktop_entries "${selected_apps[@]}"
     else
-        log "Creating desktop entries only (packages will not be installed)..."
+        log "Desktop entries mode - installing essential CLI tools and creating desktop entries..."
+        
+        # Install essential CLI tools that would normally be installed by system setup
+        install_essential_cli_tools
+        
+        # Create desktop entries
         create_desktop_entries "${selected_apps[@]}"
         
-        echo -e "\n${YELLOW}Note: Only desktop entries were created. To install the actual packages, use your package manager:${NC}"
+        echo -e "\n${YELLOW}Note: Essential CLI tools were installed, but GUI applications were not.${NC}"
+        echo -e "To install GUI applications, use your package manager:"
         echo -e "  ${CYAN}Arch Linux:${NC} sudo pacman -S <package-name> or yay -S <aur-package>"
         echo -e "  ${CYAN}Debian/Ubuntu:${NC} sudo apt install <package-name>"
     fi
