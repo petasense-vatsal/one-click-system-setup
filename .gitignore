@@ -1,0 +1,29 @@
+# Log files
+*.log
+setup.log
+
+# Neovim plugin cache (should not be committed)
+dotfiles/nvim/nvim/
+dotfiles/nvim/.lazy-lock.json
+
+# LazyVim cache directories
+dotfiles/nvim/lazy-lock.json
+
+# Backup files
+*.bak
+*.backup
+*.old
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 
