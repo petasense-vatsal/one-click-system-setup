@@ -46,28 +46,77 @@ fi
 
 # Install additional tools used in the .zshrc
 install_additional_tools() {
-    # Install eza (modern ls replacement)
+    log "Checking for essential CLI tools..."
+    
+    # Check if tools are already installed system-wide first
+    local missing_tools=()
+    
     if ! command_exists eza; then
-        log "Installing eza..."
-        install_package "eza"
+        missing_tools+=("eza")
     fi
-    
-    # Install zoxide (smart cd command)
     if ! command_exists zoxide; then
-        log "Installing zoxide..."
-        curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+        missing_tools+=("zoxide")
     fi
-    
-    # Install yazi (terminal file manager) 
     if ! command_exists yazi; then
-        log "Installing yazi..."
-        install_package "yazi"
+        missing_tools+=("yazi")
+    fi
+    if ! command_exists fzf; then
+        missing_tools+=("fzf")
     fi
     
-    # Install fzf (fuzzy finder)
-    if ! command_exists fzf; then
-        log "Installing fzf..."
-        install_package "fzf"
+    if [[ ${#missing_tools[@]} -eq 0 ]]; then
+        info "All essential CLI tools are already installed"
+        return 0
+    fi
+    
+    log "Missing tools: ${missing_tools[*]}"
+    
+    # Try to install missing tools
+    for tool in "${missing_tools[@]}"; do
+        case "$tool" in
+            "eza")
+                if ! command_exists eza; then
+                    log "Installing eza..."
+                    install_package "eza" || warning "Failed to install eza via package manager"
+                fi
+                ;;
+            "zoxide")
+                if ! command_exists zoxide; then
+                    log "Installing zoxide..."
+                    if ! curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash; then
+                        warning "Failed to install zoxide"
+                    fi
+                fi
+                ;;
+            "yazi")
+                if ! command_exists yazi; then
+                    log "Installing yazi..."
+                    install_package "yazi" || warning "Failed to install yazi via package manager"
+                fi
+                ;;
+            "fzf")
+                if ! command_exists fzf; then
+                    log "Installing fzf..."
+                    install_package "fzf" || warning "Failed to install fzf via package manager"
+                fi
+                ;;
+        esac
+    done
+    
+    # Final check and inform user
+    local still_missing=()
+    for tool in "${missing_tools[@]}"; do
+        if ! command_exists "$tool"; then
+            still_missing+=("$tool")
+        fi
+    done
+    
+    if [[ ${#still_missing[@]} -gt 0 ]]; then
+        warning "Some tools could not be installed: ${still_missing[*]}"
+        warning "These tools may have been installed by the system setup but require a shell restart"
+        warning "If this is a new user setup, please ensure you have sudo privileges or ask an admin to install: ${still_missing[*]}"
+    else
+        info "All essential CLI tools are now available"
     fi
 }
 

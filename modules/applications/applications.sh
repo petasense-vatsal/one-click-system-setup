@@ -24,8 +24,7 @@ declare -A APPLICATIONS
 # Development Tools (GUI apps get desktop entries)
 APPLICATIONS["dev_cursor"]="Cursor AI|https://cursor.sh/|cursor|AI-powered code editor [GUI]"
 APPLICATIONS["dev_postman"]="Postman|https://www.postman.com/|postman|API development platform [GUI]"
-APPLICATIONS["dev_lazygit"]="LazyGit|https://github.com/jesseduffield/lazygit|lazygit|Terminal UI for git [CLI]"
-APPLICATIONS["dev_docker"]="Docker + Docker Compose|https://www.docker.com/|docker docker-compose|Container platform [CLI]"
+# Note: lazygit and docker are installed by system setup modules
 
 # Browsers (GUI apps get desktop entries)
 APPLICATIONS["browser_firefox"]="Firefox|https://www.mozilla.org/firefox/|firefox|Open source browser [GUI]"
@@ -51,14 +50,7 @@ APPLICATIONS["util_nwg_look"]="nwg-look|https://github.com/nwg-piotr/nwg-look|nw
 
 # Terminal & CLI Tools (only kitty gets desktop entry)
 APPLICATIONS["term_kitty"]="Kitty|https://sw.kovidgoyal.net/kitty/|kitty kitty-shell-integration kitty-terminfo|GPU-accelerated terminal [GUI]"
-APPLICATIONS["term_htop"]="Htop|https://htop.dev/|htop|Interactive process viewer [CLI]"
-APPLICATIONS["term_eza"]="Eza|https://github.com/eza-community/eza|eza|Modern ls replacement [CLI]"
-APPLICATIONS["term_bat"]="Bat|https://github.com/sharkdp/bat|bat|Cat clone with syntax highlighting [CLI]"
-APPLICATIONS["term_ripgrep"]="Ripgrep|https://github.com/BurntSushi/ripgrep|ripgrep|Fast grep alternative [CLI]"
-APPLICATIONS["term_fd"]="fd|https://github.com/sharkdp/fd|fd|Fast find alternative [CLI]"
-APPLICATIONS["term_zoxide"]="Zoxide|https://github.com/ajeetdsouza/zoxide|zoxide|Smart cd command [CLI]"
-APPLICATIONS["term_fzf"]="FZF|https://github.com/junegunn/fzf|fzf|Fuzzy finder [CLI]"
-APPLICATIONS["term_starship"]="Starship|https://starship.rs/|starship|Cross-shell prompt [CLI]"
+# Note: htop, eza, bat, ripgrep, fd, zoxide, fzf, starship are installed by system setup modules
 
 # Function to display applications by category
 show_applications() {
@@ -95,7 +87,9 @@ get_user_selections() {
     echo "  - Categories: dev browser prod hypr util term"
     echo "  - All: all"
     echo "  - Essential preset: essential"
-    echo -e "\n${YELLOW}Essential preset includes:${NC} cursor, firefox, obsidian, slack, thunar, yazi, kitty, htop"
+    echo -e "\n${YELLOW}Essential preset includes:${NC} cursor, firefox, obsidian, slack, thunar, yazi, kitty"
+    echo -e "\n${CYAN}Note:${NC} CLI tools (htop, eza, bat, ripgrep, fd, zoxide, fzf, starship, lazygit, docker)"
+    echo -e "      are automatically installed by the system setup and don't need to be selected here."
     echo -e "\n${CYAN}Desktop Entry Info:${NC}"
     echo "  [GUI] = Gets desktop entry for application launcher"
     echo "  [CLI] = Command-line tool, no desktop entry"
@@ -120,7 +114,7 @@ get_user_selections() {
                 "essential")
                     selections+=(
                         "dev_cursor" "browser_firefox" "prod_obsidian" "prod_slack"
-                        "util_thunar" "util_yazi" "term_kitty" "term_htop"
+                        "util_thunar" "util_yazi" "term_kitty"
                     )
                     ;;
                 "dev")

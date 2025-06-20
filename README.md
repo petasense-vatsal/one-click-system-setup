@@ -42,17 +42,22 @@ cd ~/.dotfiles
 
 The application installer includes:
 
-- **Development Tools**: Cursor AI, Postman, LazyGit, Docker + Docker Compose
-- **Browsers**: Firefox, Chrome
+- **Development Tools**: Cursor AI, Postman
+- **Browsers**: Firefox, Chrome  
 - **Productivity**: Obsidian, Slack
-- **Hyprland Ecosystem**: Waybar, SwayNC, Wofi, Hyprshot, Hypridle, Hyprpaper
+- **Hyprland Ecosystem**: Waybar, SwayNC, Wofi, Hyprshot, Hypridle, Hyprpaper  
 - **System Utilities**: Thunar + Plugins, Yazi, LXAppearance, nwg-look
-- **Terminal & CLI Tools**: Kitty, Htop, Eza, Bat, Ripgrep, fd, Zoxide, FZF, Starship
+- **Terminal**: Kitty
+
+**CLI Tools (Auto-installed by System Setup)**:
+LazyGit, Docker + Docker Compose, Htop, Eza, Bat, Ripgrep, fd, Zoxide, FZF, Starship
 
 **Selection Options**:
 - Individual apps: `cursor firefox obsidian`
 - Categories: `dev browser prod hypr util term`
-- Essential preset: `essential` (includes cursor, firefox, obsidian, slack, thunar, yazi, kitty, htop)
+- Essential preset: `essential` (includes cursor, firefox, obsidian, slack, thunar, yazi, kitty)
+
+> **Note**: CLI tools like htop, eza, bat, ripgrep, fd, zoxide, fzf, starship, lazygit, and docker are automatically installed by the system setup modules and don't need to be selected in the application installer.
 - All applications: `all`
 
 ### 🏠 Dotfiles Included
