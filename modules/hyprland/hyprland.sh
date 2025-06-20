@@ -36,6 +36,9 @@ fi
 if [[ -d "$REPO_ROOT/dotfiles/swaylock" ]]; then
     link_dotfile "$REPO_ROOT/dotfiles/swaylock" "$HOME/.config/swaylock"
 fi
+if [[ -d "$REPO_ROOT/dotfiles/backgrounds" ]]; then
+    link_dotfile "$REPO_ROOT/dotfiles/backgrounds" "$HOME/.config/backgrounds"
+fi
 
 # Create scripts directory
 ensure_dir "$HOME/.local/bin"

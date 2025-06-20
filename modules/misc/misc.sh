@@ -10,6 +10,14 @@ log "Setting up miscellaneous configurations..."
 
 # Note: user-scripts.sh is already executed in the main setup flow
 
+# Link additional dotfiles that might not be handled by other modules
+if [[ -d "$REPO_ROOT/dotfiles/wofi" ]]; then
+    link_dotfile "$REPO_ROOT/dotfiles/wofi" "$HOME/.config/wofi"
+fi
+if [[ -d "$REPO_ROOT/dotfiles/backgrounds" ]]; then
+    link_dotfile "$REPO_ROOT/dotfiles/backgrounds" "$HOME/.config/backgrounds"
+fi
+
 # Create .local/bin directory for user scripts
 ensure_dir "$HOME/.local/bin"
 
