@@ -1,0 +1,13 @@
+# This file exists to override the cursor-cursor.desktop in /usr/share/applications/, the one actually used is the other one in this directory
+[Desktop Entry]
+Name=Cursor
+Exec=/usr/bin/cursor --no-sandbox %U
+Terminal=false
+NoDisplay=true
+Type=Application
+Icon=cursor
+# Change the class below to "Cursor" when on X11
+StartupWMClass=cursor
+X-AppImage-Version=0.49.6
+MimeType=x-scheme-handler/cursor;
+Categories=Utility;TextEditor;Development;IDE

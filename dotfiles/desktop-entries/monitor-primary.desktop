@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Monitor Layout - Primary Only
+Comment=Use only the primary monitor
+Exec=/home/prajyot/scripts/switch_layout.sh "Primary Only"
+Icon=video-display
+Terminal=false
+Type=Application
+Categories=System;
+Keywords=monitor;display;primary;single; 

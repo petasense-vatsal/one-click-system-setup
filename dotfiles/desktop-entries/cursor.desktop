@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Cursor
+Comment=AI-first code editor
+Exec=/usr/bin/cursor --enable-features=UseOzonePlatform,WebRTCPipeWireCapturer,WaylandWindowDecorations --ozone-platform-hint=auto %F
+Icon=cursor
+Type=Application
+Terminal=false
+Categories=Development;IDE;TextEditor;
+MimeType=text/plain;inode/directory;
+StartupWMClass=cursor

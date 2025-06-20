@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Monitor Layout - Secondary Only
+Comment=Use only the secondary monitor
+Exec=/home/prajyot/scripts/switch_layout.sh "Secondary Only"
+Icon=video-display
+Terminal=false
+Type=Application
+Categories=System;
+Keywords=monitor;display;secondary;single; 

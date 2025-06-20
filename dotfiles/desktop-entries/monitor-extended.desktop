@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Monitor Layout - Extended
+Comment=Set up extended display with both monitors
+Exec=/home/prajyot/scripts/switch_layout.sh "Extended"
+Icon=video-display
+Terminal=false
+Type=Application
+Categories=System;
+Keywords=monitor;display;extended;dual; 

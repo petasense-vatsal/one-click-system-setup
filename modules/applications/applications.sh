@@ -21,44 +21,44 @@ NC='\033[0m' # No Color
 # Define application categories and their apps
 declare -A APPLICATIONS
 
-# Development Tools
-APPLICATIONS["dev_cursor"]="Cursor AI|https://cursor.sh/|cursor|AI-powered code editor"
-APPLICATIONS["dev_postman"]="Postman|https://www.postman.com/|postman|API development platform"
-APPLICATIONS["dev_lazygit"]="LazyGit|https://github.com/jesseduffield/lazygit|lazygit|Terminal UI for git"
-APPLICATIONS["dev_docker"]="Docker + Docker Compose|https://www.docker.com/|docker docker-compose|Container platform"
+# Development Tools (GUI apps get desktop entries)
+APPLICATIONS["dev_cursor"]="Cursor AI|https://cursor.sh/|cursor|AI-powered code editor [GUI]"
+APPLICATIONS["dev_postman"]="Postman|https://www.postman.com/|postman|API development platform [GUI]"
+APPLICATIONS["dev_lazygit"]="LazyGit|https://github.com/jesseduffield/lazygit|lazygit|Terminal UI for git [CLI]"
+APPLICATIONS["dev_docker"]="Docker + Docker Compose|https://www.docker.com/|docker docker-compose|Container platform [CLI]"
 
-# Browsers
-APPLICATIONS["browser_firefox"]="Firefox|https://www.mozilla.org/firefox/|firefox|Open source browser"
-APPLICATIONS["browser_chrome"]="Google Chrome|https://www.google.com/chrome/|google-chrome|Google's browser"
+# Browsers (GUI apps get desktop entries)
+APPLICATIONS["browser_firefox"]="Firefox|https://www.mozilla.org/firefox/|firefox|Open source browser [GUI]"
+APPLICATIONS["browser_chrome"]="Google Chrome|https://www.google.com/chrome/|google-chrome|Google's browser [GUI]"
 
-# Productivity
-APPLICATIONS["prod_obsidian"]="Obsidian|https://obsidian.md/|obsidian|Knowledge management"
-APPLICATIONS["prod_slack"]="Slack|https://slack.com/|slack|Team communication"
+# Productivity (GUI apps get desktop entries)
+APPLICATIONS["prod_obsidian"]="Obsidian|https://obsidian.md/|obsidian|Knowledge management [GUI]"
+APPLICATIONS["prod_slack"]="Slack|https://slack.com/|slack|Team communication [GUI]"
 
-# Hyprland Ecosystem
-APPLICATIONS["hypr_waybar"]="Waybar|https://github.com/Alexays/Waybar|waybar|Status bar for Wayland"
-APPLICATIONS["hypr_swaync"]="SwayNC|https://github.com/ErikReider/SwayNotificationCenter|swaync|Notification center"
-APPLICATIONS["hypr_wofi"]="Wofi|https://sr.ht/~scoopta/wofi/|wofi|Application launcher"
-APPLICATIONS["hypr_hyprshot"]="Hyprshot|https://github.com/Gustash/Hyprshot|hyprshot|Screenshot tool for Hyprland"
-APPLICATIONS["hypr_hypridle"]="Hypridle|https://github.com/hyprwm/hypridle|hypridle|Idle daemon for Hyprland"
-APPLICATIONS["hypr_hyprpaper"]="Hyprpaper|https://github.com/hyprwm/hyprpaper|hyprpaper|Wallpaper utility for Hyprland"
+# Hyprland Ecosystem (system components, no desktop entries needed)
+APPLICATIONS["hypr_waybar"]="Waybar|https://github.com/Alexays/Waybar|waybar|Status bar for Wayland [SYSTEM]"
+APPLICATIONS["hypr_swaync"]="SwayNC|https://github.com/ErikReider/SwayNotificationCenter|swaync|Notification center [SYSTEM]"
+APPLICATIONS["hypr_wofi"]="Wofi|https://sr.ht/~scoopta/wofi/|wofi|Application launcher [SYSTEM]"
+APPLICATIONS["hypr_hyprshot"]="Hyprshot|https://github.com/Gustash/Hyprshot|hyprshot|Screenshot tool for Hyprland [CLI]"
+APPLICATIONS["hypr_hypridle"]="Hypridle|https://github.com/hyprwm/hypridle|hypridle|Idle daemon for Hyprland [SYSTEM]"
+APPLICATIONS["hypr_hyprpaper"]="Hyprpaper|https://github.com/hyprwm/hyprpaper|hyprpaper|Wallpaper utility for Hyprland [SYSTEM]"
 
-# System Utilities  
-APPLICATIONS["util_thunar"]="Thunar + Plugins|https://docs.xfce.org/xfce/thunar/start|thunar thunar-archive-plugin|File manager with archive support"
-APPLICATIONS["util_yazi"]="Yazi|https://github.com/sxyazi/yazi|yazi|Terminal file manager"
-APPLICATIONS["util_lxappearance"]="LXAppearance|https://wiki.lxde.org/en/LXAppearance|lxappearance|GTK theme switcher"
-APPLICATIONS["util_nwg_look"]="nwg-look|https://github.com/nwg-piotr/nwg-look|nwg-look|GTK settings for Wayland"
+# System Utilities (mixed - some need desktop entries)
+APPLICATIONS["util_thunar"]="Thunar + Plugins|https://docs.xfce.org/xfce/thunar/start|thunar thunar-archive-plugin|File manager with archive support [GUI]"
+APPLICATIONS["util_yazi"]="Yazi|https://github.com/sxyazi/yazi|yazi|Terminal file manager [GUI]"
+APPLICATIONS["util_lxappearance"]="LXAppearance|https://wiki.lxde.org/en/LXAppearance|lxappearance|GTK theme switcher [GUI]"
+APPLICATIONS["util_nwg_look"]="nwg-look|https://github.com/nwg-piotr/nwg-look|nwg-look|GTK settings for Wayland [GUI]"
 
-# Terminal & CLI Tools
-APPLICATIONS["term_kitty"]="Kitty|https://sw.kovidgoyal.net/kitty/|kitty kitty-shell-integration kitty-terminfo|GPU-accelerated terminal"
-APPLICATIONS["term_htop"]="Htop|https://htop.dev/|htop|Interactive process viewer"
-APPLICATIONS["term_eza"]="Eza|https://github.com/eza-community/eza|eza|Modern ls replacement"
-APPLICATIONS["term_bat"]="Bat|https://github.com/sharkdp/bat|bat|Cat clone with syntax highlighting"
-APPLICATIONS["term_ripgrep"]="Ripgrep|https://github.com/BurntSushi/ripgrep|ripgrep|Fast grep alternative"
-APPLICATIONS["term_fd"]="fd|https://github.com/sharkdp/fd|fd|Fast find alternative"
-APPLICATIONS["term_zoxide"]="Zoxide|https://github.com/ajeetdsouza/zoxide|zoxide|Smart cd command"
-APPLICATIONS["term_fzf"]="FZF|https://github.com/junegunn/fzf|fzf|Fuzzy finder"
-APPLICATIONS["term_starship"]="Starship|https://starship.rs/|starship|Cross-shell prompt"
+# Terminal & CLI Tools (only kitty gets desktop entry)
+APPLICATIONS["term_kitty"]="Kitty|https://sw.kovidgoyal.net/kitty/|kitty kitty-shell-integration kitty-terminfo|GPU-accelerated terminal [GUI]"
+APPLICATIONS["term_htop"]="Htop|https://htop.dev/|htop|Interactive process viewer [CLI]"
+APPLICATIONS["term_eza"]="Eza|https://github.com/eza-community/eza|eza|Modern ls replacement [CLI]"
+APPLICATIONS["term_bat"]="Bat|https://github.com/sharkdp/bat|bat|Cat clone with syntax highlighting [CLI]"
+APPLICATIONS["term_ripgrep"]="Ripgrep|https://github.com/BurntSushi/ripgrep|ripgrep|Fast grep alternative [CLI]"
+APPLICATIONS["term_fd"]="fd|https://github.com/sharkdp/fd|fd|Fast find alternative [CLI]"
+APPLICATIONS["term_zoxide"]="Zoxide|https://github.com/ajeetdsouza/zoxide|zoxide|Smart cd command [CLI]"
+APPLICATIONS["term_fzf"]="FZF|https://github.com/junegunn/fzf|fzf|Fuzzy finder [CLI]"
+APPLICATIONS["term_starship"]="Starship|https://starship.rs/|starship|Cross-shell prompt [CLI]"
 
 # Function to display applications by category
 show_applications() {
@@ -96,6 +96,10 @@ get_user_selections() {
     echo "  - All: all"
     echo "  - Essential preset: essential"
     echo -e "\n${YELLOW}Essential preset includes:${NC} cursor, firefox, obsidian, slack, thunar, yazi, kitty, htop"
+    echo -e "\n${CYAN}Desktop Entry Info:${NC}"
+    echo "  [GUI] = Gets desktop entry for application launcher"
+    echo "  [CLI] = Command-line tool, no desktop entry"
+    echo "  [SYSTEM] = System component, no desktop entry"
     
     while true; do
         echo
@@ -256,32 +260,86 @@ install_from_download() {
     esac
 }
 
-# Function to create desktop entries
+# Function to create desktop entries (only for GUI applications)
 create_desktop_entries() {
     local selections=("$@")
+    
+    # Define which applications need desktop entries (GUI apps only)
+    local gui_apps=(
+        "dev_cursor" "dev_postman"
+        "browser_firefox" "browser_chrome"
+        "prod_obsidian" "prod_slack"
+        "util_thunar" "util_yazi" "util_lxappearance" "util_nwg_look"
+        "term_kitty"
+    )
+    
+    # Map application keys to their desktop entry filenames
+    declare -A desktop_entry_files
+    desktop_entry_files["dev_cursor"]="cursor.desktop"
+    desktop_entry_files["prod_obsidian"]="obsidian.desktop"
+    desktop_entry_files["prod_slack"]="slack.desktop"
     
     ensure_dir "$HOME/.local/share/applications"
     
     for selection in "${selections[@]}"; do
-        IFS='|' read -r name url package desc <<< "${APPLICATIONS[$selection]}"
+        # Check if this app needs a desktop entry
+        local needs_desktop_entry=false
+        for gui_app in "${gui_apps[@]}"; do
+            if [[ "$selection" == "$gui_app" ]]; then
+                needs_desktop_entry=true
+                break
+            fi
+        done
         
-        log "Creating desktop entry for $name..."
-        
-        # Create desktop entry
-        cat > "$HOME/.local/share/applications/${package}.desktop" << EOF
+        if [[ "$needs_desktop_entry" == true ]]; then
+            IFS='|' read -r name url package desc <<< "${APPLICATIONS[$selection]}"
+            
+            log "Creating desktop entry for $name..."
+            
+            # Get the primary package name for desktop entry
+            local primary_package=$(echo "$package" | cut -d' ' -f1)
+            
+            # Check if we have a custom desktop entry for this app
+            if [[ -n "${desktop_entry_files[$selection]:-}" ]]; then
+                local custom_entry="$REPO_ROOT/dotfiles/desktop-entries/${desktop_entry_files[$selection]}"
+                if [[ -f "$custom_entry" ]]; then
+                    log "Using custom desktop entry for $name with Wayland optimizations"
+                    cp "$custom_entry" "$HOME/.local/share/applications/${desktop_entry_files[$selection]}"
+                    info "Installed optimized desktop entry for $name"
+                    continue
+                fi
+            fi
+            
+            # Fallback: Create basic desktop entry for apps without custom configs
+            cat > "$HOME/.local/share/applications/${primary_package}.desktop" << EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
 Name=$name
 Comment=$desc
-Exec=$package
-Icon=$package
+Exec=$primary_package
+Icon=$primary_package
 Terminal=false
 Categories=Application;
 EOF
-        
-        info "Created desktop entry for $name"
+            
+            info "Created basic desktop entry for $name"
+        else
+            IFS='|' read -r name url package desc <<< "${APPLICATIONS[$selection]}"
+            info "Skipping desktop entry for $name (CLI/system component)"
+        fi
     done
+    
+    # Copy monitor configuration desktop entries if they exist
+    if [[ -d "$REPO_ROOT/dotfiles/desktop-entries" ]]; then
+        for monitor_entry in "$REPO_ROOT/dotfiles/desktop-entries"/monitor-*.desktop; do
+            if [[ -f "$monitor_entry" ]]; then
+                local filename=$(basename "$monitor_entry")
+                cp "$monitor_entry" "$HOME/.local/share/applications/$filename"
+                info "Installed monitor configuration: $filename"
+            fi
+        done
+    fi
     
     # Update desktop database
     if command -v update-desktop-database >/dev/null 2>&1; then
