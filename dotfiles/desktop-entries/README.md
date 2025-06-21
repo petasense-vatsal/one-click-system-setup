@@ -10,6 +10,18 @@ This directory contains optimized desktop entries for various applications, part
 - **Categories**: Development, IDE, TextEditor
 - **MIME Types**: text/plain, inode/directory
 
+### Cursor Override (`cursor-cursor.desktop`)
+- **Purpose**: Overrides the default cursor-cursor.desktop installed by the Cursor package
+- **NoDisplay**: Set to true to prevent duplicate entries in application launchers
+- **Auto-installed**: Automatically copied when Cursor is selected in the application installer
+
+### Google Chrome (`google-chrome.desktop`)
+- **Wayland flags**: `--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer,WaylandWindowDecorations --ozone-platform-hint=auto`
+- **Benefits**: Native Wayland support, proper window decorations, WebRTC screen sharing
+- **Categories**: Network, WebBrowser
+- **MIME Types**: Full web browser MIME type support including PDF and various web formats
+- **Actions**: New window and incognito window with Wayland flags
+
 ### Obsidian (`obsidian.desktop`)
 - **Environment**: `OBSIDIAN_USE_WAYLAND=1`
 - **Wayland flags**: `--enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland --ozone-platform-hint=auto`

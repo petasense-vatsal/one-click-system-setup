@@ -23,7 +23,10 @@ echo "╚═══════════════════════�
 echo -e "${NC}"
 
 echo -e "${CYAN}This script will help you install essential applications.${NC}"
-echo -e "${YELLOW}You can choose individual apps, categories, or presets.${NC}"
+echo -e "${YELLOW}🎯 New Interactive Selection Modes:${NC}"
+echo -e "  ${GREEN}1)${NC} Interactive mode - Yes/No prompts (recommended)"
+echo -e "  ${BLUE}2)${NC} Quick presets - Choose from predefined sets"
+echo -e "  ${YELLOW}3)${NC} Legacy mode - Type application names"
 echo
 
 # Export SETUP_MODE to be used by the applications module

@@ -70,8 +70,243 @@ show_applications() {
 # Function to get user selections
 get_user_selections() {
     local -n result_array=$1
-    local selections=()
+    local user_selections=()
     
+    echo -e "\n${CYAN}Application Selection Mode:${NC}"
+    echo "  1) Interactive mode - Yes/No prompts for each application (recommended)"
+    echo "  2) Quick presets - Choose from predefined sets"
+    echo "  3) Legacy mode - Type application names"
+    echo
+    
+    local selection_mode
+    while true; do
+        read -p "Choose selection mode [1/2/3]: " mode_choice
+        case "$mode_choice" in
+            1)
+                selection_mode="interactive"
+                break
+                ;;
+            2)
+                selection_mode="presets"
+                break
+                ;;
+            3)
+                selection_mode="legacy"
+                break
+                ;;
+            *)
+                echo -e "${YELLOW}Please enter 1, 2, or 3${NC}"
+                ;;
+        esac
+    done
+    
+    case "$selection_mode" in
+        "interactive")
+            get_interactive_selections user_selections
+            ;;
+        "presets")
+            get_preset_selections user_selections
+            ;;
+        "legacy")
+            get_legacy_selections user_selections
+            ;;
+    esac
+    
+    result_array=("${user_selections[@]}")
+}
+
+# Interactive yes/no selection for each app
+get_interactive_selections() {
+    local -n interactive_selections=$1
+    
+    echo -e "\n${YELLOW}📱 Interactive Application Selection${NC}"
+    echo -e "${CYAN}For each application, press:${NC}"
+    echo -e "  ${GREEN}y/Y${NC} = Yes, install this"
+    echo -e "  ${RED}n/N${NC} = No, skip this"
+    echo -e "  ${BLUE}Enter${NC} = Use recommended default"
+    echo -e "  ${YELLOW}q${NC} = Quit selection and use current choices"
+    echo
+    
+    # Define recommended apps (will default to 'yes')
+    local recommended_apps=(
+        "dev_cursor" "browser_firefox" "browser_chrome" 
+        "prod_obsidian" "util_thunar" "term_kitty"
+    )
+    
+    # Process each category
+    process_category "Development Tools" "dev" interactive_selections recommended_apps
+    process_category "Browsers" "browser" interactive_selections recommended_apps
+    process_category "Productivity" "prod" interactive_selections recommended_apps
+    process_category "System Utilities" "util" interactive_selections recommended_apps
+    process_category "Terminal & CLI" "term" interactive_selections recommended_apps
+    process_category "Hyprland Ecosystem" "hypr" interactive_selections recommended_apps
+    
+    if [[ ${#interactive_selections[@]} -eq 0 ]]; then
+        echo -e "\n${YELLOW}No applications selected. Would you like to install the essential preset instead?${NC}"
+        read -p "Install essential apps (cursor, firefox, obsidian, thunar, kitty)? [y/N]: " install_essential
+        if [[ "$install_essential" =~ ^[Yy]$ ]]; then
+            interactive_selections+=(
+                "dev_cursor" "browser_firefox" "prod_obsidian" 
+                "util_thunar" "term_kitty"
+            )
+        fi
+    fi
+}
+
+# Process each category with yes/no prompts
+process_category() {
+    local category_title="$1"
+    local category_prefix="$2"
+    local -n category_selections=$3
+    local -n recommended=$4
+    
+    echo -e "\n${BLUE}=== $category_title ===${NC}"
+    
+    # Get apps in this category
+    local category_apps=()
+    for key in "${!APPLICATIONS[@]}"; do
+        if [[ "$key" == "${category_prefix}_"* ]]; then
+            category_apps+=("$key")
+        fi
+    done
+    
+    # Sort apps for consistent order
+    IFS=$'\n' category_apps=($(sort <<<"${category_apps[*]}"))
+    
+    for app_key in "${category_apps[@]}"; do
+        IFS='|' read -r name url package desc <<< "${APPLICATIONS[$app_key]}"
+        
+        # Check if this app is recommended
+        local is_recommended=false
+        for rec_app in "${recommended[@]}"; do
+            if [[ "$app_key" == "$rec_app" ]]; then
+                is_recommended=true
+                break
+            fi
+        done
+        
+        # Show the prompt with cleaner formatting
+        echo -e "\n${CYAN}$name${NC} - $desc"
+        
+        local prompt_text="Install $name? "
+        if [[ "$is_recommended" == true ]]; then
+            prompt_text+="[Y/n] "
+        else
+            prompt_text+="[y/N] "
+        fi
+        
+        while true; do
+            read -p "$prompt_text" choice
+            
+            # Handle empty input (use default)
+            if [[ -z "$choice" ]]; then
+                if [[ "$is_recommended" == true ]]; then
+                    choice="y"
+                else
+                    choice="n"
+                fi
+            fi
+            
+            case "$choice" in
+                [Yy]*)
+                    category_selections+=("$app_key")
+                    echo -e "  ${GREEN}✓${NC} Added $name"
+                    break
+                    ;;
+                [Nn]*)
+                    echo -e "  ${RED}✗${NC} Skipped $name"
+                    break
+                    ;;
+                [Qq]*)
+                    echo -e "${YELLOW}Stopping selection...${NC}"
+                    return 0
+                    ;;
+                *)
+                    echo -e "${YELLOW}Please enter y/n, or press Enter for default${NC}"
+                    ;;
+            esac
+        done
+    done
+}
+
+# Quick preset selection
+get_preset_selections() {
+    local -n preset_selections=$1
+    
+    echo -e "\n${YELLOW}📦 Quick Presets${NC}"
+    echo -e "\n${BLUE}Available presets:${NC}"
+    echo "  1) Essential (5 apps) - cursor, firefox, obsidian, thunar, kitty"
+    echo "  2) Developer (7 apps) - Essential + chrome, postman"
+    echo "  3) Full Desktop (12 apps) - Developer + slack, yazi, lxappearance, nwg-look, hyprshot"
+    echo "  4) Everything (all apps) - All available applications"
+    echo "  5) Browsers only - firefox, chrome"
+    echo "  6) Hyprland ecosystem - waybar, swaync, wofi, hyprshot, hypridle, hyprpaper"
+    echo "  7) Custom selection - Choose your own combination"
+    echo
+    
+    while true; do
+        read -p "Select preset [1-7]: " preset_choice
+        case "$preset_choice" in
+            1)
+                preset_selections+=(
+                    "dev_cursor" "browser_firefox" "prod_obsidian" 
+                    "util_thunar" "term_kitty"
+                )
+                echo -e "${GREEN}✓${NC} Selected Essential preset (5 apps)"
+                break
+                ;;
+            2)
+                preset_selections+=(
+                    "dev_cursor" "browser_firefox" "browser_chrome" "prod_obsidian" 
+                    "util_thunar" "term_kitty" "dev_postman"
+                )
+                echo -e "${GREEN}✓${NC} Selected Developer preset (7 apps)"
+                break
+                ;;
+            3)
+                preset_selections+=(
+                    "dev_cursor" "dev_postman" "browser_firefox" "browser_chrome" 
+                    "prod_obsidian" "prod_slack" "util_thunar" "util_yazi" 
+                    "util_lxappearance" "util_nwg_look" "term_kitty" "hypr_hyprshot"
+                )
+                echo -e "${GREEN}✓${NC} Selected Full Desktop preset (12 apps)"
+                break
+                ;;
+            4)
+                preset_selections=($(printf '%s\n' "${!APPLICATIONS[@]}"))
+                echo -e "${GREEN}✓${NC} Selected Everything preset (${#preset_selections[@]} apps)"
+                break
+                ;;
+            5)
+                preset_selections+=("browser_firefox" "browser_chrome")
+                echo -e "${GREEN}✓${NC} Selected Browsers only preset (2 apps)"
+                break
+                ;;
+            6)
+                preset_selections+=(
+                    "hypr_waybar" "hypr_swaync" "hypr_wofi" "hypr_hyprshot" 
+                    "hypr_hypridle" "hypr_hyprpaper"
+                )
+                echo -e "${GREEN}✓${NC} Selected Hyprland ecosystem preset (6 apps)"
+                break
+                ;;
+            7)
+                echo -e "${CYAN}Switching to interactive mode for custom selection...${NC}"
+                get_interactive_selections preset_selections
+                break
+                ;;
+            *)
+                echo -e "${YELLOW}Please enter a number between 1-7${NC}"
+                ;;
+        esac
+    done
+}
+
+# Legacy text-based selection (original method)
+get_legacy_selections() {
+    local -n legacy_selections=$1
+    
+    echo -e "\n${YELLOW}📝 Legacy Text Selection Mode${NC}"
     echo -e "\n${YELLOW}Available Applications:${NC}"
     
     # Show all categories
@@ -87,7 +322,7 @@ get_user_selections() {
     echo "  - Categories: dev browser prod hypr util term"
     echo "  - All: all"
     echo "  - Essential preset: essential"
-    echo -e "\n${YELLOW}Essential preset includes:${NC} cursor, firefox, obsidian, slack, thunar, yazi, kitty"
+    echo -e "\n${YELLOW}Essential preset includes:${NC} cursor, firefox, obsidian, thunar, kitty"
     echo -e "\n${CYAN}Note:${NC} CLI tools (htop, eza, bat, ripgrep, fd, zoxide, fzf, starship, lazygit, docker)"
     echo -e "      are automatically installed by the system setup and don't need to be selected here."
     echo -e "\n${CYAN}Desktop Entry Info:${NC}"
@@ -104,47 +339,47 @@ get_user_selections() {
             return 0
         fi
         
-        # Process user input
+        # Process user input (existing logic)
         for item in $user_input; do
             case "$item" in
                 "all")
-                    selections=($(printf '%s\n' "${!APPLICATIONS[@]}"))
+                    legacy_selections=($(printf '%s\n' "${!APPLICATIONS[@]}"))
                     break 2
                     ;;
                 "essential")
-                    selections+=(
-                        "dev_cursor" "browser_firefox" "prod_obsidian" "prod_slack"
-                        "util_thunar" "util_yazi" "term_kitty"
+                    legacy_selections+=(
+                        "dev_cursor" "browser_firefox" "prod_obsidian" 
+                        "util_thunar" "term_kitty"
                     )
                     ;;
                 "dev")
                     for key in "${!APPLICATIONS[@]}"; do
-                        [[ "$key" == "dev_"* ]] && selections+=("$key")
+                        [[ "$key" == "dev_"* ]] && legacy_selections+=("$key")
                     done
                     ;;
                 "browser")
                     for key in "${!APPLICATIONS[@]}"; do
-                        [[ "$key" == "browser_"* ]] && selections+=("$key")
+                        [[ "$key" == "browser_"* ]] && legacy_selections+=("$key")
                     done
                     ;;
                 "prod")
                     for key in "${!APPLICATIONS[@]}"; do
-                        [[ "$key" == "prod_"* ]] && selections+=("$key")
+                        [[ "$key" == "prod_"* ]] && legacy_selections+=("$key")
                     done
                     ;;
                 "hypr")
                     for key in "${!APPLICATIONS[@]}"; do
-                        [[ "$key" == "hypr_"* ]] && selections+=("$key")
+                        [[ "$key" == "hypr_"* ]] && legacy_selections+=("$key")
                     done
                     ;;
                 "util")
                     for key in "${!APPLICATIONS[@]}"; do
-                        [[ "$key" == "util_"* ]] && selections+=("$key")
+                        [[ "$key" == "util_"* ]] && legacy_selections+=("$key")
                     done
                     ;;
                 "term")
                     for key in "${!APPLICATIONS[@]}"; do
-                        [[ "$key" == "term_"* ]] && selections+=("$key")
+                        [[ "$key" == "term_"* ]] && legacy_selections+=("$key")
                     done
                     ;;
                 *)
@@ -152,7 +387,7 @@ get_user_selections() {
                     local found=false
                     for key in "${!APPLICATIONS[@]}"; do
                         if [[ "$key" == *"_$item" ]]; then
-                            selections+=("$key")
+                            legacy_selections+=("$key")
                             found=true
                             break
                         fi
@@ -166,9 +401,9 @@ get_user_selections() {
         break
     done
     
-    # Remove duplicates and populate result array
-    local unique_selections=($(printf '%s\n' "${selections[@]}" | sort -u))
-    result_array=("${unique_selections[@]}")
+    # Remove duplicates
+    local unique_selections=($(printf '%s\n' "${legacy_selections[@]}" | sort -u))
+    legacy_selections=("${unique_selections[@]}")
 }
 
 # Function to install packages based on distribution
@@ -270,6 +505,7 @@ create_desktop_entries() {
     # Map application keys to their desktop entry filenames
     declare -A desktop_entry_files
     desktop_entry_files["dev_cursor"]="cursor.desktop"
+    desktop_entry_files["browser_chrome"]="google-chrome.desktop"
     desktop_entry_files["prod_obsidian"]="obsidian.desktop"
     desktop_entry_files["prod_slack"]="slack.desktop"
     
@@ -300,6 +536,16 @@ create_desktop_entries() {
                     log "Using custom desktop entry for $name with Wayland optimizations"
                     cp "$custom_entry" "$HOME/.local/share/applications/${desktop_entry_files[$selection]}"
                     info "Installed optimized desktop entry for $name"
+                    
+                    # Special handling for Cursor - also copy cursor-cursor.desktop to override the default
+                    if [[ "$selection" == "dev_cursor" ]]; then
+                        local cursor_override="$REPO_ROOT/dotfiles/desktop-entries/cursor-cursor.desktop"
+                        if [[ -f "$cursor_override" ]]; then
+                            cp "$cursor_override" "$HOME/.local/share/applications/cursor-cursor.desktop"
+                            info "Installed Cursor override desktop entry (cursor-cursor.desktop)"
+                        fi
+                    fi
+                    
                     continue
                 fi
             fi

@@ -52,27 +52,30 @@ The application installer includes:
 **CLI Tools (Auto-installed by System Setup)**:
 LazyGit, Docker + Docker Compose, Htop, Eza, Bat, Ripgrep, fd, Zoxide, FZF, Starship
 
-**Selection Options**:
+### 🎯 Selection Methods
+
+**1. Interactive Mode (Recommended)**
+- Yes/No prompts for each application
+- Smart defaults for recommended apps
+- Visual feedback with ✓/✗ indicators
+- Can quit early with 'q'
+
+**2. Quick Presets**
+- **Essential** (5 apps): cursor, firefox, obsidian, thunar, kitty
+- **Developer** (7 apps): Essential + chrome, postman
+- **Full Desktop** (12 apps): Developer + slack, yazi, lxappearance, nwg-look, hyprshot
+- **Everything**: All available applications
+- **Browsers only**: firefox, chrome
+- **Hyprland ecosystem**: waybar, swaync, wofi, hyprshot, hypridle, hyprpaper
+- **Custom selection**: Switch to interactive mode
+
+**3. Legacy Mode**
+- Type application names or categories
 - Individual apps: `cursor firefox obsidian`
 - Categories: `dev browser prod hypr util term`
-- Essential preset: `essential` (includes cursor, firefox, obsidian, slack, thunar, yazi, kitty)
-
-> **Note**: CLI tools like htop, eza, bat, ripgrep, fd, zoxide, fzf, starship, lazygit, and docker are automatically installed by the system setup modules and don't need to be selected in the application installer.
 - All applications: `all`
 
-### 🏠 Dotfiles Included
-
-- **Zsh**: Oh My Zsh with Zinit plugin manager and Starship prompt
-- **tmux**: Feature-rich configuration with TPM and Catppuccin theme
-- **Neovim**: LazyVim setup with LSPs
-- **Hyprland**: Complete Wayland compositor configuration with custom keybindings
-- **Terminal**: Kitty configuration with Catppuccin theme and transparency
-- **Git**: Personal git configuration
-- **Starship**: Beautiful cross-shell prompt with Catppuccin color scheme
-- **User Scripts**: 
-  - `switch-layout` - Monitor layout switcher for Hyprland (Extended/Primary/Secondary)
-  - `nzo [search]` - File finder using zoxide and fzf that opens files in Neovim
-  - `hypr-kill-tmux-window.sh` - Intelligent window killer that properly handles tmux sessions
+> **Note**: CLI tools like htop, eza, bat, ripgrep, fd, zoxide, fzf, starship, lazygit, and docker are automatically installed by the system setup modules and don't need to be selected in the application installer.
 
 ## Usage
 
@@ -116,3 +119,28 @@ Edit the configuration files in `dotfiles/` to customize your setup. The setup s
 - Ubuntu/Debian
 - Fedora/CentOS/RHEL
 - Other systemd-based distributions 
+
+## 🔧 **Tmux Configuration**
+
+Includes a feature-rich tmux setup with:
+- **TPM (Tmux Plugin Manager)** - Automatically installed and configured
+- **10+ Essential Plugins** - All automatically installed during setup:
+  - `tmux-sensible` - Basic tmux settings
+  - `tmux-yank` - Copy to system clipboard  
+  - `tmux-resurrect` - Save/restore tmux sessions
+  - `tmux-continuum` - Auto-save sessions
+  - `tmux-thumbs` - Copy text with hints
+  - `tmux-fzf` - Fuzzy finder integration
+  - `tmux-fzf-url` - URL extraction and opening
+  - `catppuccin-tmux` - Beautiful theme
+  - `tmux-sessionx` - Enhanced session management
+  - `tmux-floax` - Floating terminal windows
+
+**🚀 Automated Plugin Installation**: No need to manually run `prefix + I` - all plugins are installed automatically during setup with multiple fallback methods for reliability.
+
+**Key Features**:
+- Prefix key: `Ctrl+A`
+- Mouse support enabled
+- Status bar on top (macOS style)
+- Vi-mode keybindings
+- Session persistence and auto-restore 
