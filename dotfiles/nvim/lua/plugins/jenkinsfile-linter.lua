@@ -1,1 +1,1 @@
-return { 'ckipp01/nvim-jenkinsfile-linter' }
+return { "ckipp01/nvim-jenkinsfile-linter" }
